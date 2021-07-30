@@ -10,17 +10,16 @@ import utils.MongoUtils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserDao {
     private final MongoDatabase database = connect("aLevel");
 
     public void createData(User... users) {
-        for (User user : users) {
-            final Document document = mapperFrom(user);
-            MongoCollection<Document> userList = database.getCollection("users");
-            List<Document> documents = Arrays.asList(document);
-            userList.insertMany(documents);
-        }
+        MongoCollection<Document> userList = database.getCollection("users");
+        userList.insertMany(Arrays.stream(users)
+                .map(user -> mapperFrom(user))
+                .collect(Collectors.toList()));
     }
 
     public void readAllData() {
