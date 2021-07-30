@@ -14,19 +14,13 @@ import java.util.List;
 public class UserDao {
     private final MongoDatabase database = connect("aLevel");
 
-
-    public void createData(User user1, User user2, User user3) {
-        /*final User user1 = new User("Bruce", "Smith", 25, "Bank", "London");
-        final User user2 = new User("Chip", "Skin", 31, "MCdonalds", "New-York");
-        final User user3 = new User("Forrest", "Green", 44, "BarberShop", "Sidney");
-*/
-        final Document document1 = mapperFrom(user1);
-        final Document document2 = mapperFrom(user2);
-        final Document document3 = mapperFrom(user3);
-
-        MongoCollection<Document> users = database.getCollection("users");
-        List<Document> documents = Arrays.asList(document1, document2, document3);
-        users.insertMany(documents);
+    public void createData(User... users) {
+        for (User user : users) {
+            final Document document = mapperFrom(user);
+            MongoCollection<Document> userList = database.getCollection("users");
+            List<Document> documents = Arrays.asList(document);
+            userList.insertMany(documents);
+        }
     }
 
     public void readAllData() {
@@ -75,7 +69,7 @@ public class UserDao {
         users.deleteOne(filter);
     }
 
-    public void deleteAllData(){
+    public void deleteAllData() {
         MongoCollection<Document> users = database.getCollection("users");
         users.deleteMany(new Document());
     }
