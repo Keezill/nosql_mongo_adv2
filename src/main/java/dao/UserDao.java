@@ -1,6 +1,6 @@
 package dao;
 
-import com.mongodb.MongoCredential;
+import com.mongodb.*;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -31,11 +31,32 @@ public class UserDao {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 
-    public void readOneData(User user) {
+    public void readUser(User user) {
         final Document filter = new Document();
         filter.append("firstName", user.getFirstName());
         MongoCollection<Document> users = database.getCollection("users");
         FindIterable<Document> documents = users.find(filter);
+        for (Document document : documents) {
+            System.out.println(document);
+        }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    }
+
+    public void readUserByName(String name) {
+        final Document filter = new Document();
+        filter.append("firstName", name);
+        MongoCollection<Document> users = database.getCollection("users");
+        FindIterable<Document> documents = users.find(filter);
+        for (Document document : documents) {
+            System.out.println(document);
+        }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    }
+
+    public void readUserByAge(int age){
+        BasicDBObject query = new BasicDBObject("age", new BasicDBObject("$lte", age));
+        MongoCollection<Document> users = database.getCollection("users");
+        FindIterable<Document> documents = users.find(query);
         for (Document document : documents) {
             System.out.println(document);
         }

@@ -17,11 +17,13 @@ public class Main {
 
         // CRUD / Read
         userDao.readAllData();
+        userDao.readUserByName("Forrest");
+        userDao.readUserByAge(44);
 
         // CRUD / Update
-        userDao.readOneData(user2);
+        userDao.readUser(user2);
         userDao.updateData(user2, user);
-        userDao.readOneData(user);
+        userDao.readUser(user);
 
         // CRUD / Delete
         userDao.readAllData();
