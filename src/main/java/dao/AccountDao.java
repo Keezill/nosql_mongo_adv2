@@ -16,7 +16,7 @@ public class AccountDao {
     public void createData(Account... accounts) {
         MongoCollection<Document> accountList = database.getCollection("accounts");
         accountList.insertMany(Arrays.stream(accounts)
-                .map(account -> mapperFrom(account))
+                .map(AccountDao::mapperFrom)
                 .collect(Collectors.toList()));
     }
 
@@ -105,6 +105,7 @@ public class AccountDao {
 
     public static Document mapperFrom(Account account) {
         final Document document = new Document();
+        document.append("id", account.getId());
         document.append("accountName", account.getAccountName());
         document.append("moneyAmount", account.getMoneyAmount());
         return document;

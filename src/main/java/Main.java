@@ -3,6 +3,9 @@ import dao.UserDao;
 import entity.Account;
 import entity.User;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
         UserDao userDao = new UserDao();
@@ -41,7 +44,7 @@ public class Main {
         System.out.println("CRUD / Update");
         userDao.readUser(user2);
         userDao.updateData(user2, user);
-        userDao.readUser(user3);
+        userDao.readUser(user);
         accountDao.readAccount(acc3);
         accountDao.updateData(acc3, acc5);
         accountDao.readAccount(acc5);
@@ -49,12 +52,21 @@ public class Main {
         // CRUD / Delete
         System.out.println("CRUD / Delete");
         userDao.readAllData();
-        userDao.deleteData(user3);
+        userDao.deleteData(user1);
         userDao.readAllData();
         accountDao.readAllData();
-        accountDao.deleteData(acc1);
+        accountDao.deleteData(acc4);
         accountDao.readAllData();
 
-        accountDao.bindAccToUser(acc2.getId(), user2.getId());
+        accountDao.bindAccToUser(acc2.getId(), user3.getId());
+        accountDao.bindAccToUser(acc1.getId(), user3.getId());
+        accountDao.bindAccToUser(acc3.getId(), user.getId());
+
+
+        userDao.bindUserToAcc(user3.getId(), Arrays.asList(acc2.getId(), acc1.getId()));
+        userDao.bindUserToAcc(user.getId(), Arrays.asList(acc3.getId()));
+
+        System.out.println("DINT");
+        userDao.findUserByManyAcc(2);
     }
 }

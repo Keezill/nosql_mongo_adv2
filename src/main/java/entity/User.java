@@ -3,6 +3,7 @@ package entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -14,6 +15,7 @@ public class User {
     private int age;
     private String workplace;
     private String city;
+    private List<String> accounts;
 
     public User(String firstName, String lastName, int age, String workplace, String city) {
         this.firstName = firstName;

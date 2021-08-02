@@ -9,6 +9,7 @@ import org.bson.Document;
 import utils.MongoUtils;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserDao {
@@ -17,7 +18,7 @@ public class UserDao {
     public void createData(User... users) {
         MongoCollection<Document> userList = database.getCollection("users");
         userList.insertMany(Arrays.stream(users)
-                .map(user -> mapperFrom(user))
+                .map(UserDao::mapperFrom)
                 .collect(Collectors.toList()));
     }
 
@@ -93,6 +94,31 @@ public class UserDao {
         users.deleteMany(new Document());
     }
 
+    public void bindUserToAcc(String userId, List<String> accounts){
+        MongoCollection<Document> users = database.getCollection("users");
+
+        final Document filter = new Document();
+        filter.append("id", userId);
+
+        final Document update = new Document();
+        update.append("accounts", accounts);
+
+        final Document document = new Document();
+        document.append("$set", update);
+
+        users.updateOne(filter, document);
+    }
+
+    public void findUserByManyAcc(int amount){
+        MongoCollection<Document> userList = database.getCollection("users");
+        BasicDBObject query = new BasicDBObject("accounts", new BasicDBObject("$size", amount));
+        FindIterable<Document> documents = userList.find(query);
+        for (Document documentList : documents) {
+            System.out.println(documentList);
+        }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    }
+
     public static MongoDatabase connect(String databaseName) {
         return MongoUtils.getMongoClient(null).getDatabase(databaseName);
     }
@@ -104,6 +130,7 @@ public class UserDao {
 
     public static Document mapperFrom(User user) {
         final Document document = new Document();
+        document.append("id", user.getId());
         document.append("firstName", user.getFirstName());
         document.append("lastName", user.getLastName());
         document.append("age", user.getAge());
