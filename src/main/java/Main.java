@@ -23,16 +23,13 @@ public class Main {
         Account acc4 = new Account("BruceAcc", "200055");
         Account acc5 = new Account("ChipleyAcc2", "2000");
 
-        // CRUD / Delete all
         userDao.deleteAllData();
         accountDao.deleteAllData();
 
-        // CRUD / Create
         System.out.println("CRUD / Create");
         userDao.createData(user1, user2, user3);
         accountDao.createData(acc1, acc2, acc3, acc4);
 
-        // CRUD / Read
         System.out.println("CRUD / Read");
         userDao.readAllData();
         userDao.readUserByName("Forrest");
@@ -40,7 +37,6 @@ public class Main {
         accountDao.readAllData();
         accountDao.readAccountByName("ChipleyAcc");
 
-        // CRUD / Update
         System.out.println("CRUD / Update");
         userDao.readUser(user2);
         userDao.updateData(user2, user);
@@ -49,7 +45,6 @@ public class Main {
         accountDao.updateData(acc3, acc5);
         accountDao.readAccount(acc5);
 
-        // CRUD / Delete
         System.out.println("CRUD / Delete");
         userDao.readAllData();
         userDao.deleteData(user1);
@@ -66,7 +61,6 @@ public class Main {
         userDao.bindUserToAcc(user3.getId(), Arrays.asList(acc2.getId(), acc1.getId()));
         userDao.bindUserToAcc(user.getId(), Arrays.asList(acc3.getId()));
 
-        System.out.println("DINT");
         userDao.findUserByManyAcc(2);
     }
 }
