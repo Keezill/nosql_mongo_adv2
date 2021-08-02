@@ -3,6 +3,8 @@ package entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 public class User {
@@ -19,5 +21,6 @@ public class User {
         this.age = age;
         this.workplace = workplace;
         this.city = city;
+        this.id = UUID.randomUUID().toString();
     }
 }

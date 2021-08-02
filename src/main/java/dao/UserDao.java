@@ -9,7 +9,6 @@ import org.bson.Document;
 import utils.MongoUtils;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserDao {
@@ -124,5 +123,4 @@ public class UserDao {
         user.setId(document.get("_id", String.class));
         return user;
     }
-
 }
